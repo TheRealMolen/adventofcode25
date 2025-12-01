@@ -7,7 +7,7 @@ load_dotenv()
 COOKIE = os.getenv("COOKIE")
 VCPROJ = "aoc.vcxproj"
 VCFILTERS = VCPROJ + ".filters"
-YEAR = 2024
+YEAR = 2025
 
 
 Path('data').mkdir(exist_ok=True)

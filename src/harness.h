@@ -126,9 +126,10 @@ inline string stringfromfile(const string& fname)
 }
 
 
+#define DAYFILENAME(day)    format("day{:02}.txt", day)
 #define READ(str)       stringlist::fromstring(str)
-#define LOAD(day)       stringlist::fromfile("day" #day ".txt")
-#define LOADSTR(day)    stringfromfile("day" #day ".txt")
+#define LOAD(day)       stringlist::fromfile(DAYFILENAME(day))
+#define LOADSTR(day)    stringfromfile(DAYFILENAME(day))
 
 
 // ----- string wrangling -----

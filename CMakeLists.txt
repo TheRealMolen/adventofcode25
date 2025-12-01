@@ -37,5 +37,10 @@ set(gcc_flags "-Wall;-Wextra;-Wshadow;-Wshadow;-Wformat=2;-Werror")
 set(msvc_flags "-W3")
 
 target_compile_options(${EXE_NAME} PRIVATE
-   "$<${gcc_like_cxx}:$<BUILD_INTERFACE:${gcc_flags}>>"
-   "$<${msvc_cxx}: $<BUILD_INTERFACE:${msvc_flags}>>")
+    "$<${gcc_like_cxx}:$<BUILD_INTERFACE:${gcc_flags}>>"
+    "$<${msvc_cxx}: $<BUILD_INTERFACE:${msvc_flags}>>")
+
+# link intel tbb for par_unseq
+#if (NOT MSVC)
+#    target_link_libraries(${EXE_NAME} "tbb")
+#endif()
