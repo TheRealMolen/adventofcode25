@@ -20,42 +20,6 @@ int day1(const stringlist& input)
     return numZeroes;
 }
 
-int day1_2_broken(const stringlist& input)
-{
-    int numZeroes = 0;
-    int currNum = 50;
-    for (auto& line : input)
-    {
-        char dir = line[0];
-        int delta = strtol(line.data() + 1, nullptr, 10);
-        if (dir == 'L')
-        {
-            delta = -delta;
-            if (currNum == 0)
-                currNum += 100;
-        }
-        currNum = (currNum + delta);
-
-        while (currNum > 99)
-        {
-            currNum -= 100;
-            if (currNum)
-                ++numZeroes;
-        }
-        while (currNum < 0)
-        {
-            currNum += 100;
-            if (currNum)
-                ++numZeroes;
-        }
-
-        if (currNum == 0)
-            ++numZeroes;
-    }
-
-    return numZeroes;
-}
-
 int day1_2(const stringlist& input)
 {
     int numZeroes = 0;
@@ -64,29 +28,30 @@ int day1_2(const stringlist& input)
     {
         char dir = line[0];
         int delta = strtol(line.data() + 1, nullptr, 10);
+        numZeroes += delta / 100;
+        delta = delta % 100;
 
         if (dir == 'L')
         {
-            for (; delta; --delta)
-            {
-                --currNum;
-                if (currNum == 0)
-                    ++numZeroes;
-                if (currNum < 0)
-                    currNum += 100;
-            }
+            delta = -delta;
+            if (currNum == 0)
+                currNum += 100;
         }
-        else
+
+        currNum = (currNum + delta);
+
+        if (currNum > 99)
         {
-            for (; delta; --delta)
-            {
-                ++currNum;
-                if (currNum > 99)
-                    currNum -= 100;
-                if (currNum == 0)
-                    ++numZeroes;
-            }
+            currNum -= 100;
+            ++numZeroes;
         }
+        else if (currNum < 0)
+        {
+            currNum += 100;
+            ++numZeroes;
+        }
+        else if (currNum == 0)
+            ++numZeroes;
     }
 
     return numZeroes;
@@ -112,5 +77,4 @@ L82)";
 
     test(6, day1_2(READ(sample)));
     gogogo(day1_2(LOAD(1)));
-    // 6452 too low
 }
