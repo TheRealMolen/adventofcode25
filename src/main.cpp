@@ -32,18 +32,15 @@ void run_day25();
 
 // -------------------------------------------------------------------
 
-int main()
+void guarded_main()
 {
-    initcolours();
-    srand((unsigned int)time(0));
-
     cout << "\n\n" << GARLAND(2) << "  advent of code 2025  " << GARLAND(2) << endl;
 
     {
         TIME_SCOPE(current);
 
         run_day1();
-        //run_day2();
+        run_day2();
         //run_day3();
         //run_day4();
         //run_day5();
@@ -67,6 +64,23 @@ int main()
         //run_day23();
         //run_day24();
         //run_day25();
+    }
+}
+
+// -------------------------------------------------------------------
+
+int main()
+{
+    initcolours();
+    srand((unsigned int)time(0));
+
+    try {
+        guarded_main();
+    }
+    catch (const string msg)
+    {
+        cerr << RED << "\n\nCatastrophe: " << RESET << msg << endl;
+        return 1;
     }
 
 #ifdef _WIN32
