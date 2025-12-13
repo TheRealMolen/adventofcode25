@@ -87,13 +87,11 @@ i64 day2(const string& input)
         if (!fromValid)
         {
             from = (from10 * from10) / 10;
-            //cout << "adjusting range " << range << " to be " << from << "-" << to << "\th10=" << from10 << endl;
         }
         if (!toValid)
         {
             to10 /= 10;
             to = (to10 * to10) - 1;
-            //cout << "adjusting range " << range << " to be " << from << "-" << to << "\th10=" << from10 << endl;
         }
 
         if (from10 != to10)
@@ -111,12 +109,9 @@ i64 day2(const string& input)
         }
         
         i64 hiShift = hi * from10;
-        //if (hiShift + lo <= to)
-        //    cout << "range " << from << "-" << to << " starting counting from " << hi << lo << endl;
         
         while (hiShift + lo <= to)
         {
-        //    cout << "   .. found one: " << hi << lo << endl;
             result += hiShift + lo;
 
             ++hi;
@@ -149,34 +144,28 @@ i64 day2_2(const string& input)
             begin(toMults), end(toMults),
             back_inserter(mults));
 
-        cout << "checking " << range << " - " << size(mults) << " patterns" << endl;
         for (auto [mult, maxChunk] : mults)
         {
-          //  cout << "range " << range << " need to check mult " << mult << " / " << maxChunk << endl;
-
             i64 from = rngFrom;
             i64 to = rngTo;
 
-            if (from < mult)
+            const i64 minChunk = (maxChunk + 1) / 10;
+            const i64 minFrom = minChunk * mult;
+            if (from < minFrom)
             {
-                from = mult;
+                from = minFrom;
                 if (from > to)
                     continue;
-
-//                cout << "  * adjusting range " << range << " to be " << from << "-" << to << endl;
             }
             if (to > (mult * maxChunk))
             {
                 to = mult * maxChunk;
                 if (from > to)
                     continue;
-
-//                cout << "  * adjusting range " << range << " to be " << from << "-" << to << endl;
             }
 
             // THINKS: this often drastically underestimates; could do with a better start guess
             i64 chunk = (from + maxChunk) / mult;
-        //    cout << "  > initial chunk " << chunk << endl;
 
             i64 id = chunk * mult;
             while (id < from)
@@ -185,14 +174,9 @@ i64 day2_2(const string& input)
             {
                 if (find(begin(found), end(found), id) == end(found))
                 {
-                    cout << "   .. found one: " << id << endl;
                     result += id;
                     found.push_back(id);
                 }
-    //            else
-    //            {
-    //                cout << "        (ignoring dupe " << id << ")" << endl;
-    //            }
                 
                 id += mult;
             }
@@ -212,5 +196,4 @@ void run_day2()
 
     test(4174379265, day2_2(sample));
     gogogo(day2_2(LOADSTR(2)));
-    // 69555472140 too high
 }
