@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 import datetime, os, sys, urllib.request, urllib.error
 from pathlib import Path
 from dotenv import load_dotenv
